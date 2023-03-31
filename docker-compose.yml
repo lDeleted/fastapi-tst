@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  postgres:
+      image: postgres:11.12-buster
+      restart: always
+      ports:
+        - "5432:5432"
+      volumes:
+        - ./data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_USER: postgres
+        PGDATA: /var/lib/postgresql/data/pgdata
+  app:
+    image: devco/fast-api-example:latest
+    ports:
+      - 8000:8000
+    links:
+      - postgres:postgres
